@@ -1,0 +1,9 @@
+.open C:/Users/Inorbis/ProjecteFCB/tickets.db
+
+SELECT * FROM oferta;
+
+SELECT * FROM demanda;
+
+SELECT o.id, o.date, o.boca, o.fila, o.asiento, d.name, d.dni FROM oferta o LEFT JOIN demanda d ON o.date = d.date AND o.boca = d.boca AND o.fila = d.fila AND o.asiento = d.asiento;
+
+DELETE FROM sqlite_sequence WHERE name='oferta';
