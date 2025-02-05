@@ -6,7 +6,7 @@ from unidecode import unidecode
 
 def extract_names_from_body(body):
     # Buscar patrones específicos en el cuerpo del mensaje
-    pattern = re.compile(r'\* Poseedor de entrada # \d+\*\s*Nombre Completo: \*(.*?)\*', re.DOTALL)
+    pattern = re.compile(r'Nombre Completo:\s*\*([^\*]+)\*')
     names = pattern.findall(body)
     # Convertir a mayúsculas y eliminar tildes
     names = [unidecode(name).upper() for name in names]

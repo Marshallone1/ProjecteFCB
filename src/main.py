@@ -1,9 +1,9 @@
 import os
 import sqlite3
-from src.config import OUTPUT_DIR, OUTPUT_AS_DIR, DB_PATH
-from src.databaseSetup import setup_database  # Asegúrate de que esta función esté correctamente importada
-from src.convertPDF import convert_pdf_L2425  # Asegúrate de que esta función esté correctamente importada
-from src.PedidoPDF import package_pdfs  # Asegúrate de que esta función esté correctamente importada
+from config import OUTPUT_DIR, OUTPUT_AS_DIR, DB_PATH
+from databaseSetup import setup_database  # Asegúrate de que esta función esté correctamente importada
+from convertPDF import convert_pdf_L2425  # Asegúrate de que esta función esté correctamente importada
+from PedidoPDF import package_pdfs  # Asegúrate de que esta función esté correctamente importada
 
 def match_offers_and_demands():
     conn = sqlite3.connect(DB_PATH)

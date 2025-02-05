@@ -26,6 +26,7 @@ DB_PATH = os.path.join(BASE_DIR, 'tickets.db')
 FONT_SIZE = 8.64
 Y_CORRECTION_FACTOR = 3
 CUSTOM_FONT_NAME = "FC_BARCELONA"
+PREDEFINED_X0 = 141.8  # Cambia este valor al x0 detectado previamente
 
 # Configuración del servidor de correo
 imap_server = "imap.gmail.com"
@@ -33,4 +34,4 @@ email_user = "registros.ventas.completadas@gmail.com"
 email_pass = "lghe mzod iqed yfzw"  # Asegúrate de usar una contraseña de aplicación si usas Gmail
 
 # Ruta al archivo CSV
-csv_filepath = os.path.join(INPUT_DIR, 'Asignacion', 'PlantillaBetis.csv')
+csv_filepath = os.path.join(INPUT_DIR, 'Asignacion', 'Alaves.csv')

@@ -1,7 +1,6 @@
 import os
 import shutil
 from src.config import PDF_DIR, CLASSIFIED_DIR
-from src.splitPDF import split_pdf
 from src.lecturaPDF import extract_ticket_data, save_to_database
 
 UNPROCESSED_DIR = "unprocessed"
@@ -12,7 +11,6 @@ def classify_pdfs():
         if filename.endswith(".pdf"):
             input_pdf = os.path.join(PDF_DIR, filename)
             # Dividir el PDF en páginas individuales
-            split_pdf(input_pdf, PDF_DIR)
 
             # Clasificar cada página individualmente
             for page_filename in os.listdir(PDF_DIR):

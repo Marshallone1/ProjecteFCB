@@ -8,7 +8,7 @@ from src.convertPDF import convert_pdf_L2425
 from src.config import INPUT_DIR, OUTPUT_DIR
 
 def test_replace_text_in_single_page_pdf():
-    input_pdf = os.path.join(INPUT_DIR, 'C:/Users/Inorbis/ProjecteFCB/data/EntradasPrueba/EntradachampionsMAL.pdf')
+    input_pdf = os.path.join(INPUT_DIR, 'C:/Users/Inorbis/ProjecteFCB/data/EntradasPrueba/Entradachampions.pdf')
     output_pdf = os.path.join('C:/Users/Inorbis/ProjecteFCB/data/EntradasPrueba/', 'test_output.pdf')
     replacement_texts = ["MARCAL AGUSTI DNI:55465347X"]
 

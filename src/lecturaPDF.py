@@ -3,7 +3,7 @@ import re
 import sqlite3
 import os
 from datetime import datetime
-from src.config import PDF_DIR_PASSI, PDF_DIR_COMPRA, OUTPUT_DIR, DB_PATH, UNPROCESSED_DIR
+from config import PDF_DIR_PASSI, PDF_DIR_COMPRA, OUTPUT_DIR, DB_PATH, UNPROCESSED_DIR
 
 def validate_data(data):
     errors = []

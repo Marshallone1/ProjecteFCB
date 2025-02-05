@@ -1,13 +1,13 @@
 import csv
 import sqlite3
-from src.emailNames import get_names_from_email
-from src.config import imap_server, email_user, email_pass, csv_filepath
+from emailNames import get_names_from_email
+from config import imap_server, email_user, email_pass, csv_filepath
 
 # Función para leer datos reales desde un archivo CSV
 def read_real_data_from_csv(csv_filepath):
     real_data = []
     with open(csv_filepath, newline='', encoding='utf-8-sig') as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=',')
+        reader = csv.DictReader(csvfile, delimiter=';')
         for row in reader:
             real_data.append(row)
     return real_data

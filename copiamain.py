@@ -1,7 +1,7 @@
 import os
 import sqlite3
 #from src.databaseSetup import setup_database
-from src.classifyPDF import classify_pdfs
+from tests.classifyPDF import classify_pdfs
 from tests.generate_fake_demand import generate_fake_demand
 from src.convertPDF import convert_pdf_L2425
 from src.config import OUTPUT_DIR, CLASSIFIED_DIR

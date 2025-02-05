@@ -1,7 +1,17 @@
 import os
 import fitz  # PyMuPDF
 import sqlite3
-from src.config import OUTPUT_AS_DIR, OUTPUT_PEDIDO_DIR, DB_PATH
+from config import OUTPUT_AS_DIR, OUTPUT_PEDIDO_DIR, DB_PATH
+
+def extract_info_from_filename(filename):
+    parts = filename.split('_')
+    if len(parts) >= 6:
+        pedido_id = parts[0]
+        boca = parts[-3]
+        fila = parts[-2]
+        asiento = parts[-1].split('.')[0]
+        return pedido_id, boca, fila, asiento
+    return None, None, None, None
 
 def package_pdfs():
     conn = sqlite3.connect(DB_PATH)
@@ -29,7 +39,17 @@ def package_pdfs():
             print(f"El número de archivos PDF encontrados ({len(pdf_files)}) no coincide con el número de entradas en la base de datos ({count}) para el pedido {pedido_id}")
             continue
         
+        # Extraer información de boca, fila y asiento de los nombres de los archivos PDF
+        pdf_files_info = []
         for pdf_file in pdf_files:
+            _, boca, fila, asiento = extract_info_from_filename(pdf_file)
+            if boca and fila and asiento:
+                pdf_files_info.append((boca, fila, asiento, pdf_file))
+        
+        # Ordenar los archivos PDF por boca, fila y asiento
+        pdf_files_info.sort(key=lambda x: (int(x[0]), int(x[1]), int(x[2])))
+        
+        for _, _, _, pdf_file in pdf_files_info:
             input_pdf_path = os.path.join(OUTPUT_AS_DIR, pdf_file)
             input_pdf = fitz.open(input_pdf_path)
             output_pdf.insert_pdf(input_pdf)
@@ -38,6 +58,7 @@ def package_pdfs():
         # Guardar el PDF empaquetado solo si contiene páginas
         if len(output_pdf) > 0:
             output_pdf.save(output_pdf_path)
+            print(f"Pedido {pedido_id} guardado exitosamente en {output_pdf_path}")
         else:
             print(f"No se encontraron archivos PDF para el pedido {pedido_id}")
         
