@@ -6,10 +6,17 @@ from unidecode import unidecode
 
 def extract_names_from_body(body):
     # Buscar patrones específicos en el cuerpo del mensaje
-    pattern = re.compile(r'Nombre Completo:\s*\*([^\*]+)\*')
-    names = pattern.findall(body)
+    # pattern = re.compile(r'Nombre Completo:\s*\*([^\*]+)\*')
+    # names = pattern.findall(body)
     # Convertir a mayúsculas y eliminar tildes
-    names = [unidecode(name).upper() for name in names]
+    # names = [unidecode(name).upper() for name in names]
+    # return names
+    # Buscar patrones específicos en el cuerpo del mensaje
+    
+    pattern = re.compile(r'Nombre Completo:\s*(.*?)\s*Fecha de Nacimiento:')    
+    names = pattern.findall(body)
+    # Convertir a mayúsculas y eliminar tildes y asteriscos
+    names = [unidecode(name).upper().replace('*', '') for name in names]
     return names
 
 def get_names_from_email(imap_server, email_user, email_pass, subject_id):

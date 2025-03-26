@@ -13,7 +13,7 @@ def print_pdf_text(file_path):
 
 if __name__ == "__main__":
     # Ruta del archivo PDF de entrada
-    input_pdf = "C:/Users/Inorbis/ProjecteFCB/data/EntradaCompra.pdf"
+    input_pdf = "C:/Users/Inorbis/ProjecteFCB/data/input/LecturaEntradasCompra/128.17.20-22-24.pdf"
     
     if os.path.exists(input_pdf):
         print_pdf_text(input_pdf)

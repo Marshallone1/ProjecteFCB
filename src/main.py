@@ -1,9 +1,9 @@
 import os
 import sqlite3
 from config import OUTPUT_DIR, OUTPUT_AS_DIR, DB_PATH
-from databaseSetup import setup_database  # Asegúrate de que esta función esté correctamente importada
-from convertPDF import convert_pdf_L2425  # Asegúrate de que esta función esté correctamente importada
-from PedidoPDF import package_pdfs  # Asegúrate de que esta función esté correctamente importada
+from databaseSetup import setup_database  
+from convertPDF import convert_pdf_L2425  
+# from PedidoPDF import package_pdfs 
 
 def match_offers_and_demands():
     conn = sqlite3.connect(DB_PATH)
@@ -27,7 +27,7 @@ def match_offers_and_demands():
         # Convertir y mover el PDF
         input_pdf = f"{date}_{boca}_{fila}_{asiento}.pdf"
         input_pdf_path = os.path.join(OUTPUT_DIR, input_pdf)
-        new_name = f"{pedido_id}_{name}_{date}_{boca}_{fila}_{asiento}.pdf"
+        new_name = f"{pedido_id}_{date}_{boca}_{fila}_{asiento}.pdf"
         output_pdf = os.path.join(OUTPUT_AS_DIR, new_name)
         replacements = [name]  # Lista de reemplazos, en este caso solo el nombre
         

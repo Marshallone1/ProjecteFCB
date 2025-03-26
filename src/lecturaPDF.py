@@ -3,7 +3,7 @@ import re
 import sqlite3
 import os
 from datetime import datetime
-from config import PDF_DIR_PASSI, PDF_DIR_COMPRA, OUTPUT_DIR, DB_PATH, UNPROCESSED_DIR
+from config import PDF_DIR_PASSI, PDF_DIR_COMPRA, PDF_DIR_COMPRA2, OUTPUT_DIR, DB_PATH, UNPROCESSED_DIR
 
 def validate_data(data):
     errors = []
@@ -69,6 +69,7 @@ def extract_ticket_data(pdf_path):
     return ticket_data[0] if ticket_data else None
 
 # v2 entradas compra, funcion para extraer datos del ticket a partir de la línea que comienza con "FC BARCELONA -"
+
 def extract_ticket_data_v2(pdf_path):
     ticket_data = None
     try:
@@ -81,12 +82,49 @@ def extract_ticket_data_v2(pdf_path):
         start_index = next(i for i, line in enumerate(lines) if line.startswith("FC BARCELONA -"))
 
         # Extraer la información relevante
-        date_str = lines[start_index + 4].strip()
+        date_str = lines[start_index + 1].strip().split()[0]  # Extraer solo la parte de la fecha
+        date_obj = datetime.strptime(date_str, "%d/%m/%Y")
+        date_int = int(date_obj.strftime("%Y%m%d"))
+
+        boca_str = lines[start_index + 6].strip()
+        boca = int(boca_str) if boca_str.isdigit() else None
+
+        fila = lines[start_index + 7].strip()
+        asiento = lines[start_index + 8].strip()
+
+        # Crear el diccionario con la información extraída
+        ticket_data = {
+            "date": date_int,
+            "boca": boca,
+            "fila": fila,
+            "asiento": asiento
+        }
+
+    except (IndexError, ValueError, StopIteration) as e:
+        print(f"Error al extraer datos del PDF: {e}")
+    
+    return ticket_data
+
+#Funcion entradas compra difereentes v3
+def extract_ticket_data_v3(pdf_path):
+    ticket_data = None
+    try:
+        doc = fitz.open(pdf_path)
+        page = doc[0]
+        text = page.get_text("text")
+        lines = text.split('\n')
+
+        # Encontrar el índice de la línea que comienza con "FC BARCELONA -"
+        start_index = next(i for i, line in enumerate(lines) if line.startswith("FC BARCELONA -"))
+
+        # Extraer la información relevante
+        date_str = lines[start_index + 4].strip()  # Ajustar el índice para la fecha
         date_obj = datetime.strptime(date_str, "%d/%m/%Y")
         date_int = int(date_obj.strftime("%Y%m%d"))
 
         boca_str = lines[start_index + 8].strip()
         boca = int(boca_str) if boca_str.isdigit() else None
+
         fila_asiento = lines[start_index + 9].strip().split()
         fila = fila_asiento[0]
         asiento = fila_asiento[1]
@@ -100,11 +138,12 @@ def extract_ticket_data_v2(pdf_path):
         }
 
     except (IndexError, ValueError, StopIteration) as e:
-        pass
+        print(f"Error al extraer datos del PDF: {e}")
     
     return ticket_data
 
 # Función para guardar datos en la base de datos de oferta sin duplicados
+
 def save_to_database(data):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -171,6 +210,12 @@ def process_all_pdfs():
         if filename.endswith(".pdf"):
             pdf_path = os.path.join(PDF_DIR_COMPRA, filename)
             process_pdf(pdf_path, extract_ticket_data_v2)
+    
+    # Procesar los archivos PDF en PDF_DIR_COMPRA con la versión 3
+    for filename in os.listdir(PDF_DIR_COMPRA2):
+        if filename.endswith(".pdf"):
+            pdf_path = os.path.join(PDF_DIR_COMPRA2, filename)
+            process_pdf(pdf_path, extract_ticket_data_v3)
 
 if __name__ == "__main__":
     process_all_pdfs()

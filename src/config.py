@@ -9,10 +9,12 @@ UNPROCESSED_DIR = os.path.join(BASE_DIR, 'unprocessed')
 FONT_PATH = os.path.join(BASE_DIR, 'data', 'fonts', 'font-0025.ttf')
 INPUT_DIR = os.path.join(BASE_DIR, 'data', 'input')
 OUTPUT_DIR = os.path.join(BASE_DIR, 'data', 'output')
+DATA_DIR = os.path.join(BASE_DIR, 'data')
 
 # Input
 PDF_DIR_PASSI = os.path.join(INPUT_DIR, 'LecturaEntradasPassi')
 PDF_DIR_COMPRA = os.path.join(INPUT_DIR, 'LecturaEntradasCompra')
+PDF_DIR_COMPRA2 = os.path.join(INPUT_DIR, 'LecturaEntradasCompra2')
 CLASSIFIED_DIR = os.path.join(INPUT_DIR, 'EntradesClasificadas')  # Directorio clasificado por partido (fecha)
 
 # Output
@@ -34,4 +36,4 @@ email_user = "registros.ventas.completadas@gmail.com"
 email_pass = "lghe mzod iqed yfzw"  # Asegúrate de usar una contraseña de aplicación si usas Gmail
 
 # Ruta al archivo CSV
-csv_filepath = os.path.join(INPUT_DIR, 'Asignacion', 'Alaves.csv')
+csv_filepath = os.path.join(INPUT_DIR, 'Asignacion', 'Osasuna3.csv')

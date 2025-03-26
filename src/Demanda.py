@@ -6,8 +6,8 @@ from config import imap_server, email_user, email_pass, csv_filepath
 # Función para leer datos reales desde un archivo CSV
 def read_real_data_from_csv(csv_filepath):
     real_data = []
-    with open(csv_filepath, newline='', encoding='utf-8-sig') as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=';')
+    with open(csv_filepath, newline='', encoding='latin1') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=',')
         for row in reader:
             real_data.append(row)
     return real_data
@@ -23,8 +23,8 @@ def generate_real_demand(csv_filepath, imap_server, email_user, email_pass):
 
     for row in data:
         print(f"Procesando pedido: {row['PEDIDO']}")
-        grupos = int(row['GRUPOS'])
-        categoria = row['Categoría (Libre)']
+        grupos = int(row['GRUPOS']) if row['GRUPOS'] else 0
+        #categoria = row['Categoría (Libre)']
         asientos = row['ASIENTOS'].split('+')
         pedido_id = row['PEDIDO']
         fecha_id = row['FECHAID']

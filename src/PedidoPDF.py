@@ -5,13 +5,14 @@ from config import OUTPUT_AS_DIR, OUTPUT_PEDIDO_DIR, DB_PATH
 
 def extract_info_from_filename(filename):
     parts = filename.split('_')
-    if len(parts) >= 6:
+    if len(parts) >= 5:
         pedido_id = parts[0]
-        boca = parts[-3]
-        fila = parts[-2]
-        asiento = parts[-1].split('.')[0]
+        # fecha = parts[1]
+        boca = parts[2]
+        fila = parts[3]
+        asiento = parts[4].split('.')[0]
         return pedido_id, boca, fila, asiento
-    return None, None, None, None
+    return None, None, None, None, None
 
 def package_pdfs():
     conn = sqlite3.connect(DB_PATH)
